@@ -1,0 +1,88 @@
+﻿
+@{
+    Layout = null;
+}
+
+@if (Session["username"] != null)
+{
+    <h2>Welcome @Session["username"].ToString()</h2>
+
+    <!DOCTYPE html>
+    <html>
+    <head>
+        <meta name="viewport" content="width=device-width" />
+        <title>Index</title>
+        <script src="~/Scripts/jquery-3.0.0.js"></script>
+        <script src="~/Scripts/bootstrap.js"></script>
+        <link href="~/Content/bootstrap.css" rel="stylesheet" />
+        <script src="~/Scripts/product.js"></script>
+    </head>
+    <body>
+        <div class="container">
+            <h2>Product Records</h2>
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal" onclick="clearTextBox()">Add New Product</button>
+            <b>Search :</b>
+            @Html.TextBox("Search")<input type="submit" id="SearchBtn" value="Search" /><br />
+            <table class="table table-bordered table-hover">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Product Name</th>
+                        <th>Product Description</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody class="tbody" id="DataSearching"></tbody>
+            </table>
+        </div>
+
+        <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal"></button>
+                        <h4 class="modal-title" id="myModalLabel">Add Product</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form>
+                            <div class="form-group">
+                                <label for="ProductId">ID</label>
+                                <input type="text" class="form-control" id="ProductId" placeholder="Id" disabled="disabled" />
+                            </div>
+                            <div class="form-group">
+                                <label for="ProductName">Product Name</label>
+                                <input type="text" class="form-control" id="ProductName" placeholder="ProductName" />
+                            </div>
+                            <div class="form-group">
+                                <label for="ProductDescription">Product Description</label>
+                                <input type="text" class="form-control" id="ProductDescription" placeholder="ProductDescription" />
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="btnAdd" onclick="return Add();">Add</button>
+                        <button type="button" class="btn btn-primary" id="btnUpdate" style="display:none;" onclick="Update();">Update</button>
+                        <button type="button" class="btn btn-dark" data-dismiss="modal">Close</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </body>
+</html>
+}
+else
+{
+Response.Redirect("Index");
+}
+
+<script type="text/javascript">
+    function preventBack() {
+        window.history.forward();
+    }
+    setTimeout("preventBack()", 0);
+    window.onunload = function () {
+        null;
+    }
+</script>
+
+
