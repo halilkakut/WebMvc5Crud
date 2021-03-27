@@ -1,0 +1,58 @@
+USE [SampleProject]
+GO
+/****** Object:  StoredProcedure [dbo].[SearchProduct]    Script Date: 27.03.2021 23:35:18 ******/
+SET ANSI_NULLS ON
+GO
+SET QUOTED_IDENTIFIER ON
+GO
+-- =============================================
+-- Author:		<Author,,Name>
+-- Create date: <Create Date,,>
+-- Description:	<Description,,>
+-- =============================================
+ALTER PROCEDURE [dbo].[SearchProduct] 
+	@search varchar(20)
+AS
+BEGIN
+	
+	select * from Product where ProductName LIKE '%' +@search+ '%'
+END
+---------------------------------------------------------------------------
+ALTER PROCEDURE [dbo].[AddNewProduct] 
+	@ProductName varchar(20),
+	@ProductDescription varchar(50)
+AS
+BEGIN
+	Insert into Product values(@ProductName,@ProductDescription)
+END
+---------------------------------------------------------------------------
+ALTER PROCEDURE [dbo].[GetProducts] 
+	AS
+BEGIN
+	select * from Product
+END
+--------------------------------------------------------------------------
+ALTER PROCEDURE [dbo].[UpdateProduct] 
+	@Id int,
+	@ProductName varchar(20),
+	@ProductDescription varchar(50)
+AS
+BEGIN
+	Update Product
+	set ProductName=@ProductName,
+	ProductDescription=@ProductDescription
+	where Id=@Id
+END
+--------------------------------------------------------------------------
+
+ALTER PROCEDURE [dbo].[UserLogin]
+	@Email varchar(20),
+	@Password varchar(10)
+AS
+BEGIN
+	-- SET NOCOUNT ON added to prevent extra result sets from
+	-- interfering with SELECT statements.
+	SET NOCOUNT ON;
+
+	select Email,UserPassword from [dbo].[UserReg] where Email=@Email and UserPassword=@Password
+END
